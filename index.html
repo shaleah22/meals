@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,23 +28,26 @@
         #imageContainer img {
             max-width: 40%; 
             height: auto;
-            display: inline-block; /* Changed to inline-block */
-            margin: 5px; /* Reduced margin */
+            display: inline-block;
+            margin: 5px;
         }
-        #nextQuestionButton, #previousQuestionButton, #restartButton {
+        #nextQuestionButton, #previousQuestionButton, #restartButton, #randomQuestionButton {
             width: 30%;
-            padding: 5px; /* Reduced padding */
-            margin-top: 5px; /* Reduced margin */
-            font-size: 14px; /* Reduced font size */
+            padding: 5px;
+            margin-top: 5px;
+            font-size: 14px;
             cursor: pointer;
-            background-color: #4CAF50; /* Green color for the buttons */
+            background-color: #4CAF50; 
             color: white;
             border: none;
             border-radius: 4px;
             text-align: center;
         }
         #previousQuestionButton {
-            background-color: #f44336; /* Red color for the previous button */
+            background-color: #f44336;
+        }
+        #randomQuestionButton {
+            background-color: #007BFF;
         }
         @media (max-width: 768px) {
             #levelDisplay {
@@ -55,26 +59,24 @@
                 margin-top: 20px;
             }
             #imageContainer img {
-                max-width: 100%; /* Full width in smaller screens */
+                max-width: 100%;
             }
-            #nextQuestionButton, #previousQuestionButton, #restartButton {
-                width: 100%; /* Full width buttons on smaller screens */
+            #nextQuestionButton, #previousQuestionButton, #restartButton, #randomQuestionButton {
+                width: 100%;
             }
         }
     </style>
 </head>
-
 <body>
     <div id="levelDisplay"></div>
-     <button id="restartButton">Restart</button> <!-- New Restart Button -->
+    <button id="restartButton">Restart</button>
     <button id="previousQuestionButton">Previous Question</button>
     <button id="nextQuestionButton">Next Question</button>
-   
+    <button id="randomQuestionButton">Random Question</button>
     <div id="externalLinkContainer"></div>
     <div id="questionContainer">
       <p id="questionText"></p>
-        <div id="imageContainer"></div> <!-- Container for multiple images -->
-        <p id="questionText"></p>
+        <div id="imageContainer"></div>
         <div id="youtubeVideoContainer"></div>
     </div>
     <div id="reelContainer" style="display: none;"></div>
@@ -82,32 +84,13 @@
 
     <script>
         const questions = [
-        
-              
-
-           
-
-          
-
-          
+            { question: "Egg, Waffles, Berries, Milk", answer: "1", imageUrls: ["https://i.postimg.cc/nrWKFPGv/IMG-6428.jpg"] },
+            { question: "Milk, Eggs, Toast", answer: "1", imageUrls: ["https://i.postimg.cc/zGKwNpbg/IMG-6429.jpg"] },
+            { question: "Muffin, Eggs, Milk", answer: "1", imageUrls: ["https://i.postimg.cc/VLSBGzz4/IMG-6430.jpg", "https://i.postimg.cc/Z0ts52VG/tacobell.jpg"] },
+            { question: "Wendy's", answer: "1", imageUrls: ["https://i.postimg.cc/BQcW0wtr/wendys.jpg"] },
 
 
-
-
-
-
-
-
-             
-
-              { question: "Wendy's", answer: "1", 
-              imageUrls: [
-              "https://i.postimg.cc/BQcW0wtr/wendys.jpg" , 
-
-              ""  ],
-            },
-          
-           { question: "Angelo's Lasagna", answer: "1", 
+            { question: "Angelo's Lasagna", answer: "1", 
               imageUrls: [
               "https://i.postimg.cc/0jryKR3H/angelos.jpg" , 
 
@@ -119,7 +102,7 @@
               imageUrls: [
               "https://i.postimg.cc/tCJ7cPrG/taco-bell.jpg" , 
 
-              "https://i.postimg.cc/Z0ts52VG/tacobell.jpg"  ],
+              ""  ],
             },
 
             { question: "Eggs and Sourdough Bread", answer: "1", 
@@ -268,60 +251,7 @@
 
 
 
-            
-            { question: "Chef Bomboy Chicken Tikka Masala", answer: "1", 
-              imageUrls: [
-              "https://i.postimg.cc/Y0gyyCyW/chicken-tikka-massala.jpg" , 
 
-              ""  ],
-            },
-
-
-
-
-  { question: "Chef Bomboy Butter Chicken", answer: "1", 
-              imageUrls: [
-              "https://i.postimg.cc/wTqGkgQ7/butter-chicken.jpg" , 
-
-              ""  ],
-            },
-
-
-
-
-
-            { question: "Chipotle", answer: "1", 
-              imageUrls: [
-              "https://i.postimg.cc/sgFZrDH2/chipotle.jpg" , 
-
-              ""  ],
-            },
-
-
-            { question: "Angelo's Baked Ziti", answer: "1", 
-              imageUrls: [
-              "https://i.postimg.cc/Y9CgjDwD/baked-ziti.jpg" , 
-
-              ""  ],
-            },
-
-
-            { question: "Angelo's Baked Ziti", answer: "1", 
-              imageUrls: [
-              "https://i.postimg.cc/Y9CgjDwD/baked-ziti.jpg" , 
-
-              ""  ],
-            },
-
-
-
-
-            
-
-
-
-
-             
         ];
 
         let currentQuestionIndex = 0;
@@ -329,20 +259,17 @@
         function loadQuestion(index) {
             if (index >= 0 && index < questions.length) {
                 currentQuestionIndex = index;
-                localStorage.setItem('currentQuestionIndex', index); // Save to localStorage
+                localStorage.setItem('currentQuestionIndex', index);
                 displayQuestion(questions[currentQuestionIndex]);
             } else {
                 alert("No more questions in this direction.");
             }
         }
 
-
         function displayQuestion(question) {
             document.getElementById('questionText').innerHTML = question.question;
-
             const imageContainer = document.getElementById('imageContainer');
-            imageContainer.innerHTML = ''; // Clear previous images
-
+            imageContainer.innerHTML = '';
             if (question.imageUrls && question.imageUrls.length > 0) {
                 question.imageUrls.forEach(url => {
                     const img = document.createElement('img');
@@ -350,104 +277,37 @@
                     imageContainer.appendChild(img);
                 });
             }
-
-            if (question.externalLink) {
-                document.getElementById('externalLinkContainer').innerHTML = question.externalLink;
-            } else {
-                document.getElementById('externalLinkContainer').innerHTML = '';
-            }
-
-            const reelContainer = document.getElementById('reelContainer'); 
-            if (question.instagramReel) {
-                reelContainer.innerHTML = question.instagramReel;
-                reelContainer.style.display = 'block';
-            } else {
-                reelContainer.style.display = 'none';
-            }
-
-            const mapContainer = document.getElementById('mapContainer');
-            if (question.map) {
-                mapContainer.innerHTML = question.map;
-                mapContainer.style.display = 'block';
-            } else {
-                mapContainer.style.display = 'none';
-            }
-
-            // Code to display YouTube video
-            const youtubeContainer = document.getElementById('youtubeVideoContainer');
-            if (question.youtubeVideo) {
-                youtubeContainer.innerHTML = question.youtubeVideo;
-                youtubeContainer.style.display = 'block';
-            } else {
-                youtubeContainer.style.display = 'none';
-            }
         }
 
-
-
-/*/old code 
-        function displayQuestion(question) {
-            document.getElementById('questionText').innerHTML = question.question;
-
-            const imageContainer = document.getElementById('imageContainer');
-            imageContainer.innerHTML = ''; // Clear previous images
-
-            if (question.imageUrls && question.imageUrls.length > 0) {
-                question.imageUrls.forEach(url => {
-                    const img = document.createElement('img');
-                    img.src = url;
-                    imageContainer.appendChild(img);
-                });
-            }
-
-            if (question.externalLink) {
-                document.getElementById('externalLinkContainer').innerHTML = question.externalLink;
-            } else {
-                document.getElementById('externalLinkContainer').innerHTML = '';
-            }
-
-
-
-            const reelContainer = document.getElementById('reelContainer'); 
-            if (question.instagramReel) {
-                reelContainer.innerHTML = question.instagramReel;
-                reelContainer.style.display = 'block';
-            } else {
-                reelContainer.style.display = 'none';
-            }
-
-            const mapContainer = document.getElementById('mapContainer');
-            if (question.map) {
-                mapContainer.innerHTML = question.map;
-                mapContainer.style.display = 'block';
-            } else {
-                mapContainer.style.display = 'none';
-            }
-        }
-
-
-*/
         function restartDrill() {
-            loadQuestion(0); // Resets to the first question
+            loadQuestion(0);
         }
 
         function setupQuestionNavigationButtons() {
             const nextQuestionButton = document.getElementById('nextQuestionButton');
-nextQuestionButton.onclick = function() {
-    if (currentQuestionIndex + 1 < questions.length) {
-        loadQuestion(currentQuestionIndex + 1);
-    } else {
-        loadQuestion(0); // Loop back to the first question
-    }
-};
-
+            nextQuestionButton.onclick = function() {
+                if (currentQuestionIndex + 1 < questions.length) {
+                    loadQuestion(currentQuestionIndex + 1);
+                } else {
+                    loadQuestion(0);
+                }
+            };
 
             const previousQuestionButton = document.getElementById('previousQuestionButton');
             previousQuestionButton.onclick = function() {
-                loadQuestion(currentQuestionIndex - 1);
+                if (currentQuestionIndex - 1 >= 0) {
+                    loadQuestion(currentQuestionIndex - 1);
+                } else {
+                    loadQuestion(questions.length - 1);
+                }
             };
 
-            // Setup for the new Restart button
+            const randomQuestionButton = document.getElementById('randomQuestionButton');
+            randomQuestionButton.onclick = function() {
+                const randomIndex = Math.floor(Math.random() * questions.length);
+                loadQuestion(randomIndex);
+            };
+
             const restartButton = document.getElementById('restartButton');
             restartButton.onclick = restartDrill;
         }
@@ -463,23 +323,6 @@ nextQuestionButton.onclick = function() {
         }
 
         init();
-    
-function newQuestion() {
-    var randomNumber = Math.floor(Math.random() * questions.length);
-    loadQuestion(randomNumber);
-}
-
-// Call newQuestion() on page load
-window.onload = newQuestion;
-
-document.addEventListener('keyup', function(event) {
-    if (event.key === 'Enter') {
-        newQuestion();
-    }
-});
-
-// Replace the event listener for "Next Question" with randomization
-document.getElementById('nextQuestionButton').addEventListener('click', newQuestion);
-</script>
+    </script>
 </body>
 </html>
